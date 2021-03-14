@@ -64,7 +64,7 @@ module Paperclip
       if options[:escape]
         escape_url(url)
       else
-        url
+      URI.encode_www_form_component(url).gsub(escape_regex){|m| "%#{m.ord.to_s(16).upcase}" }
       end
     end
 
@@ -72,7 +72,7 @@ module Paperclip
       if url.respond_to?(:escape)
         url.escape
       else
-        self.class.escape(url).gsub(escape_regex) { |m| "%#{m.ord.to_s(16).upcase}" }
+        URI.encode_www_form_component(url).gsub(escape_regex){|m| "%#{m.ord.to_s(16).upcase}" }
       end
     end
 
